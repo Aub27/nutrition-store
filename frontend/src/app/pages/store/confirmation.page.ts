@@ -147,7 +147,7 @@ import { MoneyPipe, TPipe } from '../../shared/pipes/i18n.pipes';
       width: 8px;
       height: 14px;
       border-radius: 3px;
-      background: hsl(calc(260 + var(--i) * 9) 85% 62%);
+      background: hsl(calc(80 + var(--i) * 9) 80% 52%);
       animation: fall calc(2.5s + var(--i) * 0.15s) ease-in both;
       animation-delay: calc(var(--i) * 0.07s);
       opacity: 0;

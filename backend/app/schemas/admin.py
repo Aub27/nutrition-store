@@ -24,6 +24,7 @@ class SiteSettingsPublic(BaseModel):
     tagline_fr: str | None = None
     tagline_ar: str | None = None
     logo_url: str | None = None
+    hero_image_url: str | None = None
     contact_phone: str
     contact_email: str
     contact_address: str | None = None
@@ -44,6 +45,7 @@ class SiteSettingsUpdate(BaseModel):
     tagline_fr: ShortText | None = None
     tagline_ar: ShortText | None = None
     logo_url: ImageUrl | None = None
+    hero_image_url: ImageUrl | None = None
     contact_phone: ShortText | None = Field(default=None, max_length=50)
     contact_email: EmailStr | None = None
     contact_address: ShortText | None = None

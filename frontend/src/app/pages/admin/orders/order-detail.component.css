@@ -208,7 +208,7 @@ a.pill:hover {
 .tl li.done .node {
   background: var(--grad);
   border-color: transparent;
-  box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
 }
 .tl li.bad .node {
   background: var(--danger);

@@ -31,7 +31,7 @@ import { IconComponent } from './icon.component';
       position: fixed;
       inset: 0;
       z-index: 900;
-      background: rgba(20, 7, 42, 0.5);
+      background: rgba(6, 25, 15, 0.5);
       backdrop-filter: blur(4px);
       animation: fade 0.25s ease both;
     }

@@ -147,7 +147,7 @@
   border-color: color-mix(in srgb, var(--c) 40%, #fff);
 }
 .ocard.is-new {
-  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.18), var(--sh);
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.18), var(--sh);
 }
 .ocard.busy {
   opacity: 0.6;
@@ -227,7 +227,7 @@
   overflow: hidden;
   border: 2px solid #fff;
   margin-inline-start: -8px;
-  box-shadow: 0 2px 6px rgba(60, 20, 120, 0.15);
+  box-shadow: 0 2px 6px rgba(10, 100, 50, 0.15);
   background: var(--p-50);
 }
 .th:first-child {

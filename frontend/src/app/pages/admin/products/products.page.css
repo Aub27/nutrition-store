@@ -68,7 +68,7 @@
   gap: 0.3rem;
 }
 .badge {
-  box-shadow: 0 4px 10px -4px rgba(20, 7, 42, 0.35);
+  box-shadow: 0 4px 10px -4px rgba(6, 25, 15, 0.35);
 }
 .veil {
   position: absolute;
@@ -83,7 +83,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #fff;
-  background: rgba(20, 7, 42, 0.72);
+  background: rgba(6, 25, 15, 0.72);
   backdrop-filter: blur(6px);
 }
 .body {
@@ -179,7 +179,7 @@
 }
 .stepper:focus-within {
   border-color: var(--p-400);
-  box-shadow: 0 0 0 4px rgba(155, 109, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(63, 203, 116, 0.15);
 }
 .stepper button {
   inline-size: 34px;
@@ -193,7 +193,7 @@
   background: var(--p-50);
 }
 .stepper button:disabled {
-  color: #c9c1de;
+  color: #a9c4b3;
   cursor: not-allowed;
 }
 .stepper input {

@@ -128,7 +128,7 @@
   margin-block-start: 0.45rem;
   border-radius: 50%;
   background: var(--sale);
-  box-shadow: 0 0 0 4px rgba(255, 45, 120, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.15);
 }
 .none {
   display: grid;

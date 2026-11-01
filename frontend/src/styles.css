@@ -6,46 +6,46 @@
   --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit Variable', 'Inter Variable', system-ui, sans-serif;
 
-  --ink: #14072a;
-  --ink-2: #2b1650;
-  --text: #2a2142;
-  --muted: #6f6590;
-  --bg: #fbf9ff;
+  --ink: #06190f;
+  --ink-2: #14301f;
+  --text: #1d2b22;
+  --muted: #5f7367;
+  --bg: #f8fcf6;
   --surface: #ffffff;
-  --surface-2: #f4effe;
-  --line: #e8e0f8;
+  --surface-2: #eef7ea;
+  --line: #dfeedd;
 
-  --p-50: #f5f0ff;
-  --p-100: #ece3ff;
-  --p-200: #d9c8ff;
-  --p-300: #bda0ff;
-  --p-400: #9b6dff;
-  --p-500: #7c3aed;
-  --p-600: #6a2bd6;
-  --p-700: #5521ae;
-  --p-800: #3f1a80;
-  --p-900: #25104d;
-  --magenta: #d946ef;
-  --pink: #ff5fb7;
-  --sale: #ff2d78;
+  --p-50: #effcf2;
+  --p-100: #d6f7df;
+  --p-200: #aeeec1;
+  --p-300: #78e09b;
+  --p-400: #3fcb74;
+  --p-500: #16a34a;
+  --p-600: #15803d;
+  --p-700: #166534;
+  --p-800: #14532d;
+  --p-900: #0b2e1a;
+  --magenta: #84cc16;
+  --pink: #bef264;
+  --sale: #ff5a1f;
   --ok: #12b76a;
   --warn: #f59e0b;
   --danger: #e5384f;
 
-  --grad: linear-gradient(135deg, #6d28d9 0%, #9333ea 45%, #d946ef 100%);
-  --grad-hover: linear-gradient(135deg, #5b21b6 0%, #7e22ce 45%, #c026d3 100%);
-  --grad-soft: linear-gradient(135deg, #f5f0ff 0%, #fdf2ff 100%);
-  --grad-dark: radial-gradient(1200px 600px at 85% -10%, rgba(217, 70, 239, 0.35), transparent 60%),
-    radial-gradient(900px 500px at 0% 110%, rgba(124, 58, 237, 0.55), transparent 55%), #14072a;
+  --grad: linear-gradient(135deg, #0f8a4b 0%, #22a447 50%, #5aae1f 100%);
+  --grad-hover: linear-gradient(135deg, #0a7d44 0%, #1b9440 50%, #4d9c18 100%);
+  --grad-soft: linear-gradient(135deg, #effcf2 0%, #f7fee7 100%);
+  --grad-dark: radial-gradient(1200px 600px at 85% -10%, rgba(132, 204, 22, 0.3), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(22, 163, 74, 0.5), transparent 55%), #06190f;
 
   --r-sm: 10px;
   --r: 16px;
   --r-lg: 24px;
   --r-xl: 32px;
-  --sh-sm: 0 1px 2px rgba(60, 20, 120, 0.06), 0 1px 1px rgba(60, 20, 120, 0.04);
-  --sh: 0 12px 32px -14px rgba(88, 28, 200, 0.28);
-  --sh-lg: 0 30px 60px -24px rgba(88, 28, 200, 0.4);
-  --glow: 0 12px 30px -8px rgba(147, 51, 234, 0.55);
+  --sh-sm: 0 1px 2px rgba(10, 60, 30, 0.06), 0 1px 1px rgba(10, 60, 30, 0.04);
+  --sh: 0 12px 32px -14px rgba(10, 100, 50, 0.28);
+  --sh-lg: 0 30px 60px -24px rgba(10, 100, 50, 0.4);
+  --glow: 0 12px 30px -8px rgba(22, 163, 74, 0.55);
 
   --container: 1240px;
   --header-h: 76px;
@@ -216,7 +216,7 @@ ul {
 .btn-primary:hover {
   background: var(--grad-hover);
   transform: translateY(-2px);
-  box-shadow: 0 16px 34px -8px rgba(147, 51, 234, 0.65);
+  box-shadow: 0 16px 34px -8px rgba(22, 163, 74, 0.65);
 }
 .btn-ghost {
   color: var(--p-600);
@@ -351,7 +351,7 @@ ul {
 }
 .input::placeholder,
 .textarea::placeholder {
-  color: #a99fc6;
+  color: #93a89a;
 }
 .input:hover,
 .select:hover,
@@ -363,7 +363,7 @@ ul {
 .textarea:focus {
   outline: none;
   border-color: var(--p-400);
-  box-shadow: 0 0 0 4px rgba(155, 109, 255, 0.18);
+  box-shadow: 0 0 0 4px rgba(63, 203, 116, 0.18);
 }
 .input.is-invalid,
 .textarea.is-invalid {
@@ -408,7 +408,7 @@ ul {
   -webkit-backdrop-filter: blur(14px);
 }
 .skeleton {
-  background: linear-gradient(90deg, #efe9fb 25%, #f8f4ff 37%, #efe9fb 63%);
+  background: linear-gradient(90deg, #e6f3e2 25%, #f3faf0 37%, #e6f3e2 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
   border-radius: var(--r-sm);

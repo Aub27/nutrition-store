@@ -66,7 +66,7 @@
   inline-size: 28px;
   display: grid;
   place-items: center;
-  color: #b5a9d3;
+  color: #a3bfae;
   cursor: grab;
   touch-action: none;
 }

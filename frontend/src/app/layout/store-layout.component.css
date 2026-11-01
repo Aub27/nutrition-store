@@ -17,7 +17,7 @@
 
 /* top announcement bar */
 .topbar {
-  background: linear-gradient(90deg, #1b0b3a, #3b1a7a 50%, #6d28d9);
+  background: linear-gradient(90deg, #06190f, #0b3d22 50%, #15803d);
   color: #fff;
   font-size: 0.8rem;
 }
@@ -36,7 +36,7 @@
   letter-spacing: 0.01em;
 }
 .ann app-icon {
-  color: #f0abfc;
+  color: #bef264;
 }
 .top-right {
   display: flex;
@@ -67,7 +67,7 @@
 }
 .header.scrolled {
   border-color: var(--line);
-  box-shadow: 0 10px 30px -18px rgba(88, 28, 200, 0.35);
+  box-shadow: 0 10px 30px -18px rgba(10, 100, 50, 0.35);
 }
 .header-in {
   display: flex;
@@ -150,7 +150,7 @@
   color: var(--sale);
 }
 .nav .hot:hover {
-  background: #ffe8f1;
+  background: #ffeadd;
   color: var(--sale);
 }
 .nav-btn app-icon {
@@ -179,7 +179,7 @@
 .search:focus-within {
   background: #fff;
   border-color: var(--p-300);
-  box-shadow: 0 0 0 4px rgba(155, 109, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(63, 203, 116, 0.15);
 }
 .search input {
   flex: 1;
@@ -320,7 +320,7 @@ a.sg-row:hover {
   inset-block-start: 100%;
   background: #fff;
   border-top: 1px solid var(--line);
-  box-shadow: 0 40px 60px -30px rgba(88, 28, 200, 0.35);
+  box-shadow: 0 40px 60px -30px rgba(10, 100, 50, 0.35);
   animation: rise 0.35s var(--ease) both;
 }
 .mega-in {
@@ -650,7 +650,7 @@ a.sg-row:hover {
   backdrop-filter: blur(10px);
 }
 .trust app-icon {
-  color: #f0abfc;
+  color: #bef264;
 }
 .trust span {
   display: grid;
@@ -689,7 +689,7 @@ a.sg-row:hover {
   transition: color 0.2s;
 }
 .col a:hover {
-  color: #f0abfc;
+  color: #bef264;
 }
 .brand-col p {
   max-width: 300px;

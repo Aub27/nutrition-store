@@ -110,7 +110,7 @@ import { MediaComponent } from './media.component';
       inset: 0;
       display: grid;
       place-items: center;
-      background: rgba(20, 7, 42, 0.55);
+      background: rgba(6, 25, 15, 0.55);
       color: #fff;
       font-weight: 700;
       letter-spacing: 0.04em;

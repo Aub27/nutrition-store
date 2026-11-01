@@ -28,12 +28,12 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
       inline-size: 46px;
       block-size: 26px;
       border-radius: 999px;
-      background: #d9d2ea;
+      background: #cfe0d4;
       transition: background 0.25s, box-shadow 0.25s;
     }
     .sw.on {
       background: var(--grad);
-      box-shadow: 0 6px 14px -6px rgba(147, 51, 234, 0.7);
+      box-shadow: 0 6px 14px -6px rgba(22, 163, 74, 0.7);
     }
     .knob {
       position: absolute;
@@ -43,7 +43,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
       block-size: 20px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 2px 4px rgba(20, 7, 42, 0.25);
+      box-shadow: 0 2px 4px rgba(6, 25, 15, 0.25);
       transition: transform 0.3s var(--ease);
     }
     .sw.on .knob {

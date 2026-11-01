@@ -13,6 +13,7 @@ interface Draft {
   tagline_fr: string;
   tagline_ar: string;
   logo_url: string | null;
+  hero_image_url: string | null;
   contact_phone: string;
   contact_email: string;
   contact_address: string;
@@ -35,6 +36,7 @@ function fromSettings(x: SiteSettings): Draft {
     tagline_fr: s(x.tagline_fr),
     tagline_ar: s(x.tagline_ar),
     logo_url: x.logo_url,
+    hero_image_url: x.hero_image_url,
     contact_phone: x.contact_phone,
     contact_email: x.contact_email,
     contact_address: s(x.contact_address),
@@ -92,6 +94,11 @@ function badUrl(v: string): boolean {
             <div class="field span-2">
               <span class="label">Logo</span>
               <adm-image-uploader [url]="d().logo_url" label="Logo de la boutique" [square]="true" (urlChange)="set('logo_url', $event)" (uploading)="uploading.set($event)" />
+            </div>
+            <div class="field span-2">
+              <span class="label">Photo de la bannière d'accueil</span>
+              <p class="hint">Une photo d'entraînement ou de produits, idéalement horizontale (1600 × 900 px minimum). Elle s'affiche en grand sur la page d'accueil, sous un voile sombre pour garder le texte lisible.</p>
+              <adm-image-uploader [url]="d().hero_image_url" label="Photo de la bannière" (urlChange)="set('hero_image_url', $event)" (uploading)="uploading.set($event)" />
             </div>
           </div>
         </section>
@@ -218,6 +225,7 @@ export class SettingsPage {
     tagline_fr: '',
     tagline_ar: '',
     logo_url: null,
+    hero_image_url: null,
     contact_phone: '',
     contact_email: '',
     contact_address: '',
@@ -313,6 +321,7 @@ export class SettingsPage {
       tagline_fr: orNull(d.tagline_fr),
       tagline_ar: orNull(d.tagline_ar),
       logo_url: d.logo_url,
+      hero_image_url: d.hero_image_url,
       contact_phone: d.contact_phone.trim(),
       contact_email: d.contact_email.trim(),
       contact_address: orNull(d.contact_address),

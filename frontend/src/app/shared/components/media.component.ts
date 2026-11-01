@@ -42,7 +42,7 @@ import { IconComponent } from './icon.component';
       gap: 0.4rem;
       color: rgba(255, 255, 255, 0.95);
       overflow: hidden;
-      background: linear-gradient(135deg, hsl(var(--h) 70% 52%) 0%, hsl(calc(var(--h) + 38) 78% 58%) 100%);
+      background: linear-gradient(135deg, hsl(var(--h) 65% 38%) 0%, hsl(calc(var(--h) + 30) 70% 46%) 100%);
     }
     .ph-orb {
       position: absolute;
@@ -71,6 +71,6 @@ export class MediaComponent {
   readonly seed = input(0);
   readonly iconSize = input(54);
   protected readonly src = computed(() => mediaUrl(this.url()));
-  // Purple → magenta range only, so placeholders always match the brand.
-  protected readonly hue = computed(() => 262 + ((this.seed() * 23) % 70));
+  // Green → lime range only, so placeholders always match the brand.
+  protected readonly hue = computed(() => 95 + ((this.seed() * 23) % 75));
 }

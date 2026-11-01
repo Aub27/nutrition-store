@@ -81,7 +81,7 @@ h1 {
 .save {
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
-  background: #ffe8f1;
+  background: #ffeadd;
   color: var(--sale);
   font-weight: 750;
   font-size: 0.82rem;
@@ -233,7 +233,7 @@ h1 {
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(16px);
     border-top: 1px solid var(--line);
-    box-shadow: 0 -12px 30px -16px rgba(88, 28, 200, 0.35);
+    box-shadow: 0 -12px 30px -16px rgba(10, 100, 50, 0.35);
   }
   .sticky-buy div {
     display: grid;

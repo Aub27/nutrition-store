@@ -85,6 +85,15 @@ cd frontend ; npm test              # unit tests (Vitest)
 cd frontend ; npm run build         # production build
 ```
 
+## Images
+
+Everything visual is managed from the admin panel, with no code changes:
+- **Product photos:** Admin → Produits → edit a product → Visuel. Square images work best (at least 1000 × 1000 px).
+- **Category pictures:** Admin → Catégories.
+- **Logo and home-page hero photo:** Admin → Paramètres → Identité. The hero photo is shown full-width on the home page under a dark green overlay; use a horizontal image (1600 × 900 px or larger).
+
+Uploads are checked and re-encoded to WebP on the server (max 5 MB, JPEG/PNG/WebP only). Only use photos you own or are licensed to use, for example your own shoots or images supplied by the brands you sell.
+
 ## Configuration
 
 All backend settings are environment variables (see `backend/.env.example`). In production the app **refuses to start** with a weak `SECRET_KEY`, wildcard `ALLOWED_HOSTS`, or `SameSite=None` without HTTPS.

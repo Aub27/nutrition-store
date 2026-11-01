@@ -266,6 +266,14 @@ def test_settings_update_validation(admin_client):
     assert admin_client.put("/api/v1/admin/settings", json={"delivery_fee": "-1"}).status_code == 422
 
 
+def test_hero_image_setting_is_validated_and_public(admin_client, client):
+    ok = admin_client.put("/api/v1/admin/settings", json={"hero_image_url": "/media/hero.webp"})
+    assert ok.status_code == 200 and ok.json()["hero_image_url"] == "/media/hero.webp"
+    assert client.get("/api/v1/site-settings/public").json()["hero_image_url"] == "/media/hero.webp"
+    for bad in ("javascript:alert(1)", "http://insecure.example/a.png", "data:text/html,x"):
+        assert admin_client.put("/api/v1/admin/settings", json={"hero_image_url": bad}).status_code == 422
+
+
 def test_upload_reencodes_and_strips(admin_client):
     res = admin_client.post("/api/v1/admin/uploads", files={"file": ("../../evil.png", _png_bytes(), "image/png")})
     assert res.status_code == 201

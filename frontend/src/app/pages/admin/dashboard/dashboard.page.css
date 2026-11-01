@@ -26,7 +26,7 @@
 .start {
   padding: clamp(1.2rem, 3vw, 1.8rem);
   margin-block-end: 1.4rem;
-  background: linear-gradient(135deg, #fff 0%, #faf5ff 55%, #fdf0ff 100%);
+  background: linear-gradient(135deg, #fff 0%, #f4fdf6 55%, #f7fee7 100%);
   border-color: var(--p-200);
   position: relative;
   overflow: hidden;
@@ -39,7 +39,7 @@
   inline-size: 260px;
   block-size: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(217, 70, 239, 0.22), transparent 70%);
+  background: radial-gradient(circle, rgba(132, 204, 22, 0.22), transparent 70%);
   pointer-events: none;
 }
 .start-head {
@@ -62,7 +62,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: conic-gradient(#9333ea calc(var(--p) * 1%), var(--p-100) 0);
+  background: conic-gradient(#22a447 calc(var(--p) * 1%), var(--p-100) 0);
   position: relative;
 }
 .ring::before {
@@ -179,7 +179,7 @@
   opacity: 0.15;
 }
 .kpi.alert {
-  border-color: rgba(217, 70, 239, 0.4);
+  border-color: rgba(132, 204, 22, 0.4);
 }
 .k-ico {
   inline-size: 46px;

@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { CatalogService } from '../../core/services/catalog.service';
 import { CartService } from '../../core/services/cart.service';
 import { SiteSettingsService } from '../../core/services/site-settings.service';
+import { mediaUrl } from '../../core/services/media';
 import { ToastService } from '../../core/services/toast.service';
 import { I18nService } from '../../core/i18n/i18n.service';
 import { Category, Goal, Page, Product } from '../../shared/models';
@@ -38,6 +39,7 @@ export class HomePage {
   protected best = signal<Product[]>([]);
   protected promo = signal<Product[]>([]);
   protected hasProducts = computed(() => this.fresh().length + this.best().length + this.promo().length > 0);
+  protected heroPhoto = computed(() => mediaUrl(this.settings()?.hero_image_url));
   protected threshold = computed(() => {
     const t = this.settings()?.free_delivery_threshold;
     return t ? Math.round(Number(t)) : null;

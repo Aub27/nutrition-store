@@ -145,7 +145,7 @@
   border-radius: 999px;
   background: var(--ink);
   color: #fff;
-  box-shadow: 0 24px 50px -12px rgba(20, 7, 42, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 50px -12px rgba(6, 25, 15, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
   animation: bar-in 0.45s var(--ease) both;
 }
 @keyframes bar-in {

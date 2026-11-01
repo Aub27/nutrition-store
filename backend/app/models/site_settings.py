@@ -12,6 +12,7 @@ class SiteSettings(Base):
     tagline_fr = Column(String(255), nullable=True)
     tagline_ar = Column(String(255), nullable=True)
     logo_url = Column(String(500), nullable=True)
+    hero_image_url = Column(String(500), nullable=True)
     contact_phone = Column(String(50), nullable=False)
     contact_email = Column(String(255), nullable=False)
     contact_address = Column(Text, nullable=True)

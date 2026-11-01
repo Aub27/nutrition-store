@@ -1,5 +1,9 @@
 <!-- HERO -->
-<section class="hero">
+<section class="hero" [class.has-photo]="!!heroPhoto()">
+  @if (heroPhoto(); as photo) {
+    <img class="hero-photo" [src]="photo" alt="" fetchpriority="high" decoding="async" />
+    <div class="hero-shade"></div>
+  }
   <div class="blob b1"></div>
   <div class="blob b2"></div>
   <div class="blob b3"></div>
@@ -23,7 +27,7 @@
       </ul>
     </div>
 
-    <div class="hero-art" aria-hidden="true">
+    <div class="hero-art" aria-hidden="true" [hidden]="!!heroPhoto()">
       <div class="orb-ring r1"></div>
       <div class="orb-ring r2"></div>
       <div class="tub">

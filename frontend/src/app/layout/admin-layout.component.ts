@@ -196,9 +196,9 @@ const NAV: NavItem[] = [
       flex-direction: column;
       gap: 1rem;
       padding: 1.1rem 0.85rem;
-      color: #e9defc;
-      background: radial-gradient(500px 300px at 0% 0%, rgba(147, 51, 234, 0.45), transparent 60%),
-        radial-gradient(400px 300px at 100% 100%, rgba(217, 70, 239, 0.28), transparent 60%), #1a0b36;
+      color: #dcfce7;
+      background: radial-gradient(500px 300px at 0% 0%, rgba(34, 197, 94, 0.4), transparent 60%),
+        radial-gradient(400px 300px at 100% 100%, rgba(132, 204, 22, 0.25), transparent 60%), #07200f;
       overflow: hidden;
       z-index: 50;
     }
@@ -268,7 +268,7 @@ const NAV: NavItem[] = [
       padding: 0.15rem 0.5rem 0.15rem 0.35rem;
       min-block-size: 48px;
       border-radius: 16px;
-      color: #cdbcf0;
+      color: #b9e4c7;
       font-weight: 600;
       font-size: 0.95rem;
       transition: background 0.25s, color 0.25s, transform 0.25s var(--ease), box-shadow 0.25s;
@@ -314,7 +314,7 @@ const NAV: NavItem[] = [
       font-weight: 800;
       color: #fff;
       background: var(--sale);
-      box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.25);
+      box-shadow: 0 0 0 3px rgba(255, 90, 31, 0.25);
       animation: pulse 2.4s ease-in-out infinite;
     }
     .nav-link.active .count {
@@ -324,7 +324,7 @@ const NAV: NavItem[] = [
     }
     @keyframes pulse {
       50% {
-        box-shadow: 0 0 0 6px rgba(255, 45, 120, 0);
+        box-shadow: 0 0 0 6px rgba(255, 90, 31, 0);
       }
     }
     .side-foot {
@@ -377,7 +377,7 @@ const NAV: NavItem[] = [
       gap: 0.75rem;
       min-block-size: 68px;
       padding-inline: clamp(1rem, 2.4vw, 2rem);
-      background: rgba(251, 249, 255, 0.82);
+      background: rgba(247, 254, 249, 0.82);
       backdrop-filter: blur(16px) saturate(160%);
       -webkit-backdrop-filter: blur(16px) saturate(160%);
       border-block-end: 1px solid var(--line);
@@ -518,7 +518,7 @@ const NAV: NavItem[] = [
       background: var(--p-50);
     }
     .n-item.unread {
-      background: #faf6ff;
+      background: #f4fdf6;
     }
     .n-ico {
       flex: none;
@@ -649,7 +649,7 @@ const NAV: NavItem[] = [
         position: fixed;
         inset: 0;
         z-index: 999;
-        background: rgba(20, 7, 42, 0.55);
+        background: rgba(6, 25, 15, 0.55);
         backdrop-filter: blur(3px);
         animation: fade 0.25s both;
       }

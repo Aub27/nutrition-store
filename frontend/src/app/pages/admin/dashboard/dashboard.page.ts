@@ -274,11 +274,11 @@ export class DashboardPage {
     if (!s) return [];
     const newOrders = s.by_status.NEW ?? 0;
     return [
-      { label: "Commandes aujourd'hui", value: s.orders_today, kind: 'int', icon: 'cart', a: '#7c3aed', b: '#a855f7', link: '/admin/orders', hint: `${s.total_orders} au total` },
-      { label: 'À traiter', value: newOrders, kind: 'int', icon: 'bell', a: '#d946ef', b: '#ff5fb7', link: '/admin/orders', hint: newOrders ? 'Nouvelles commandes en attente' : 'Rien en attente', alert: newOrders > 0 },
-      { label: "Chiffre d'affaires du mois", value: Number(s.revenue_month), kind: 'money', icon: 'trending', a: '#6d28d9', b: '#d946ef', link: '/admin/orders', hint: `${Number(s.revenue_total).toLocaleString('fr-FR')} DH depuis le début` },
-      { label: 'Panier moyen', value: Number(s.average_basket), kind: 'money', icon: 'cash', a: '#9333ea', b: '#f472b6', link: '/admin/orders', hint: 'Par commande' },
-      { label: 'Produits actifs', value: s.active_products, kind: 'int', icon: 'package', a: '#5521ae', b: '#9b6dff', link: '/admin/products', hint: 'Visibles en boutique' },
+      { label: "Commandes aujourd'hui", value: s.orders_today, kind: 'int', icon: 'cart', a: '#15803d', b: '#4ade80', link: '/admin/orders', hint: `${s.total_orders} au total` },
+      { label: 'À traiter', value: newOrders, kind: 'int', icon: 'bell', a: '#ea580c', b: '#fb923c', link: '/admin/orders', hint: newOrders ? 'Nouvelles commandes en attente' : 'Rien en attente', alert: newOrders > 0 },
+      { label: "Chiffre d'affaires du mois", value: Number(s.revenue_month), kind: 'money', icon: 'trending', a: '#0f8a4b', b: '#84cc16', link: '/admin/orders', hint: `${Number(s.revenue_total).toLocaleString('fr-FR')} DH depuis le début` },
+      { label: 'Panier moyen', value: Number(s.average_basket), kind: 'money', icon: 'cash', a: '#0d9488', b: '#2dd4bf', link: '/admin/orders', hint: 'Par commande' },
+      { label: 'Produits actifs', value: s.active_products, kind: 'int', icon: 'package', a: '#166534', b: '#3fcb74', link: '/admin/products', hint: 'Visibles en boutique' },
     ];
   });
 

@@ -122,14 +122,14 @@ import { errorMessage } from '../shared/http-error';
       block-size: 460px;
       inset-block-start: -120px;
       inset-inline-start: -100px;
-      background: linear-gradient(135deg, #7c3aed, #d946ef);
+      background: linear-gradient(135deg, #16a34a, #84cc16);
     }
     .b2 {
       inline-size: 380px;
       block-size: 380px;
       inset-block-end: -120px;
       inset-inline-end: -60px;
-      background: linear-gradient(135deg, #ff5fb7, #9333ea);
+      background: linear-gradient(135deg, #84cc16, #0f8a4b);
       animation-delay: -5s;
       animation-duration: 18s;
     }
@@ -138,7 +138,7 @@ import { errorMessage } from '../shared/http-error';
       block-size: 260px;
       inset-block-start: 45%;
       inset-inline-start: 58%;
-      background: #6d28d9;
+      background: #0f8a4b;
       animation-delay: -9s;
       opacity: 0.4;
     }
@@ -241,7 +241,7 @@ import { errorMessage } from '../shared/http-error';
     .control:focus-within {
       border-color: var(--p-300);
       background: rgba(255, 255, 255, 0.14);
-      box-shadow: 0 0 0 4px rgba(189, 160, 255, 0.2);
+      box-shadow: 0 0 0 4px rgba(63, 203, 116, 0.2);
       color: #fff;
     }
     .control input {
@@ -278,9 +278,9 @@ import { errorMessage } from '../shared/http-error';
       align-items: flex-start;
       padding: 0.8rem 1rem;
       border-radius: 14px;
-      background: rgba(255, 45, 120, 0.16);
-      border: 1px solid rgba(255, 120, 160, 0.45);
-      color: #ffd3e1;
+      background: rgba(255, 90, 31, 0.16);
+      border: 1px solid rgba(255, 140, 90, 0.45);
+      color: #ffdcc8;
       font-size: 0.9rem;
       animation: shake 0.4s;
     }

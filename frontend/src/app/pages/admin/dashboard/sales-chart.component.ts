@@ -32,12 +32,12 @@ const PAD = { l: 52, r: 18, t: 18, b: 34 };
       <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
         <defs>
           <linearGradient id="adm-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#9333ea" stop-opacity="0.38" />
-            <stop offset="100%" stop-color="#d946ef" stop-opacity="0.02" />
+            <stop offset="0%"             stop-color="#22a447" stop-opacity="0.38" />
+            <stop offset="100%" stop-color="#84cc16" stop-opacity="0.02" />
           </linearGradient>
           <linearGradient id="adm-line" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#6d28d9" />
-            <stop offset="100%" stop-color="#d946ef" />
+            <stop offset="0%"             stop-color="#0f8a4b" />
+            <stop offset="100%" stop-color="#84cc16" />
           </linearGradient>
         </defs>
 
@@ -101,7 +101,7 @@ const PAD = { l: 52, r: 18, t: 18, b: 34 };
       overflow: visible;
     }
     .grid {
-      stroke: #ece5fa;
+      stroke: #dcefe2;
       stroke-dasharray: 3 5;
     }
     .ylab,
@@ -139,11 +139,11 @@ const PAD = { l: 52, r: 18, t: 18, b: 34 };
       stroke-dasharray: 4 4;
     }
     .halo {
-      fill: rgba(147, 51, 234, 0.18);
+      fill: rgba(22, 163, 74, 0.18);
     }
     .pt {
       fill: #fff;
-      stroke: #9333ea;
+      stroke: #22a447;
       stroke-width: 3;
     }
     .tip {

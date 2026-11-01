@@ -66,8 +66,8 @@ import { IconComponent } from './icon.component';
       flex: 1;
     }
     .toast.success {
-      background: linear-gradient(135deg, #1b0b3a, #3b1a7a);
-      border: 1px solid rgba(217, 70, 239, 0.45);
+      background:       linear-gradient(135deg, #0b2e1a, #14532d);
+      border: 1px solid rgba(132, 204, 22, 0.45);
     }
     .toast.success app-icon {
       color: #7dffb5;
@@ -84,7 +84,7 @@ import { IconComponent } from './icon.component';
       position: fixed;
       inset: 0;
       z-index: 1100;
-      background: rgba(20, 7, 42, 0.55);
+      background: rgba(6, 25, 15, 0.55);
       backdrop-filter: blur(5px);
       animation: fade 0.2s both;
     }

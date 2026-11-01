@@ -87,6 +87,7 @@ export interface SiteSettings {
   tagline_fr: string | null;
   tagline_ar: string | null;
   logo_url: string | null;
+  hero_image_url: string | null;
   contact_phone: string;
   contact_email: string;
   contact_address: string | null;

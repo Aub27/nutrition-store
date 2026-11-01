@@ -79,7 +79,7 @@ import { errorMessage } from './http-error';
     .drop:hover,
     .drag .drop {
       border-color: var(--p-400);
-      box-shadow: 0 0 0 5px rgba(155, 109, 255, 0.14);
+      box-shadow: 0 0 0 5px rgba(63, 203, 116, 0.14);
     }
     .has .drop {
       border-style: solid;
@@ -121,7 +121,7 @@ import { errorMessage } from './http-error';
       color: #fff;
       font-weight: 650;
       font-size: 0.85rem;
-      background: linear-gradient(transparent, rgba(20, 7, 42, 0.75));
+      background: linear-gradient(transparent, rgba(6, 25, 15, 0.75));
       opacity: 0;
       transition: opacity 0.25s;
     }
@@ -136,7 +136,7 @@ import { errorMessage } from './http-error';
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      background: rgba(20, 7, 42, 0.62);
+      background: rgba(6, 25, 15, 0.62);
       color: #fff;
       font-weight: 650;
       backdrop-filter: blur(3px);

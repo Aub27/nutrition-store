@@ -132,7 +132,7 @@ const TERMS: Section[] = [
       margin: 2rem 0 0.6rem;
     }
     p {
-      color: #4b4268;
+      color: #41564a;
     }
     .links {
       margin-top: 2.5rem;
