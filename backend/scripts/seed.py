@@ -59,7 +59,7 @@ def seed(demo: bool) -> None:
         if not db.query(SiteSettings).first():
             db.add(
                 SiteSettings(
-                    site_title="Ma Boutique Nutrition",
+                    site_title="Warmode Nutrition",
                     tagline_fr="Votre nutrition, sublimée.",
                     tagline_ar="تغذيتك، بأعلى مستوى.",
                     contact_phone="+212 600 000 000",

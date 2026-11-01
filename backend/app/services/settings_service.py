@@ -9,7 +9,7 @@ def get_settings(db: Session) -> SiteSettings:
     row = db.query(SiteSettings).first()
     if row is None:
         row = SiteSettings(
-            site_title="Ma Boutique Nutrition",
+            site_title="Warmode Nutrition",
             tagline_fr="Votre nutrition, sublimée.",
             tagline_ar="تغذيتك، بأعلى مستوى.",
             contact_phone="+212 600 000 000",
