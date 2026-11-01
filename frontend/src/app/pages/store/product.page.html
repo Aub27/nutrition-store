@@ -1,0 +1,155 @@
+@if (loading()) {
+  <div class="container pd">
+    <div class="skeleton" style="aspect-ratio: 1; border-radius: 32px"></div>
+    <div style="display: grid; gap: 1rem; align-content: start">
+      <div class="skeleton" style="height: 18px; width: 30%"></div>
+      <div class="skeleton" style="height: 42px; width: 80%"></div>
+      <div class="skeleton" style="height: 30px; width: 40%"></div>
+      <div class="skeleton" style="height: 120px"></div>
+    </div>
+  </div>
+} @else if (notFound() || !product()) {
+  <div class="container">
+    <div class="empty-state">
+      <div class="orb"><app-icon name="package" [size]="34" /></div>
+      <h3>{{ 'product.notFound' | t }}</h3>
+      <a routerLink="/boutique" class="btn btn-primary">{{ 'cart.continue' | t }}</a>
+    </div>
+  </div>
+} @else {
+  @let p = product()!;
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a routerLink="/">{{ 'nav.home' | t }}</a>
+      <app-icon name="chevron-right" [size]="14" />
+      <a routerLink="/boutique">{{ 'shop.title' | t }}</a>
+      <app-icon name="chevron-right" [size]="14" />
+      <span>{{ p | loc: 'name' }}</span>
+    </nav>
+  </div>
+
+  <div class="container pd">
+    <div class="gallery">
+      <div class="g-main">
+        <app-media [url]="p.image_url" [alt]="p | loc: 'name'" [label]="p.brand ?? ''" [seed]="p.id" [iconSize]="96" />
+        <div class="g-badges">
+          @if (discount() > 0) {
+            <span class="badge badge-sale">-{{ discount() }}%</span>
+          }
+          @if (p.is_new) {
+            <span class="badge badge-new">{{ 'common.new' | t }}</span>
+          }
+          @if (p.is_bestseller) {
+            <span class="badge badge-best">{{ 'common.bestseller' | t }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      @if (p.brand) {
+        <a class="brand" [routerLink]="['/boutique']" [queryParams]="{ brand: p.brand }">{{ p.brand }}</a>
+      }
+      <h1>{{ p | loc: 'name' }}</h1>
+      @if (p.weight_label) {
+        <p class="muted weight">{{ p.weight_label }}</p>
+      }
+
+      <div class="price-row">
+        <strong class="price">{{ p.price | money }}</strong>
+        @if (p.compare_at_price) {
+          <s>{{ p.compare_at_price | money }}</s>
+        }
+        @if (discount() > 0) {
+          <span class="save">{{ 'product.save' | t: { pct: discount() } }}</span>
+        }
+      </div>
+
+      <p class="short">{{ p | loc: 'short_description' }}</p>
+
+      <div class="stock" [class]="'stock ' + p.stock_status">
+        <span class="dot"></span>
+        @switch (p.stock_status) {
+          @case ('in_stock') { {{ 'common.inStock' | t }} }
+          @case ('low_stock') { {{ 'common.lowStock' | t }} }
+          @default { {{ 'common.outOfStock' | t }} }
+        }
+      </div>
+
+      @if (p.options.length) {
+        <div class="opt">
+          <span class="label">{{ p.option_label || ('product.option' | t) }}</span>
+          <div class="opt-chips" role="radiogroup">
+            @for (o of p.options; track o) {
+              <button type="button" role="radio" [attr.aria-checked]="option() === o" class="chip" [class.is-active]="option() === o" (click)="pickOption(o)">{{ o }}</button>
+            }
+          </div>
+          @if (optionError()) {
+            <span class="field-error">{{ 'product.chooseOption' | t }}</span>
+          }
+        </div>
+      }
+
+      <div class="buy">
+        <div class="qty" role="group" [attr.aria-label]="'product.quantity' | t">
+          <button type="button" (click)="step(-1)" aria-label="-"><app-icon name="minus" [size]="18" [stroke]="2.4" /></button>
+          <span>{{ qty() }}</span>
+          <button type="button" (click)="step(1)" aria-label="+"><app-icon name="plus" [size]="18" [stroke]="2.4" /></button>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg grow" [disabled]="soldOut()" (click)="addToCart()">
+          <app-icon name="cart" [size]="20" /> {{ 'common.add' | t }}
+        </button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-lg btn-block" [disabled]="soldOut()" (click)="buyNow()">{{ 'product.buyNow' | t }}</button>
+
+      <ul class="perks">
+        <li><app-icon name="cash" [size]="20" /> {{ 'product.cod' | t }}</li>
+        <li>
+          <app-icon name="truck" [size]="20" />
+          @if (p.free_delivery) {
+            {{ 'common.freeDelivery' | t }}
+          } @else {
+            {{ 'trust.delivery.title' | t }}
+          }
+        </li>
+        <li><app-icon name="shield" [size]="20" /> {{ 'product.secure' | t }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="container tabs-wrap">
+    <div class="tabs card">
+      <div class="tab-list" role="tablist">
+        @for (t of tabs(); track t.id) {
+          <button type="button" role="tab" [attr.aria-selected]="tab() === t.id" [class.on]="tab() === t.id" (click)="tab.set(t.id)">{{ t.label | t }}</button>
+        }
+      </div>
+      <div class="tab-body" role="tabpanel">
+        @if (activeBody()) {
+          <p class="prewrap">{{ activeBody() }}</p>
+        } @else {
+          <p class="muted">{{ 'product.noInfo' | t }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  @if (related().length) {
+    <section class="section container">
+      <div class="section-head"><h2 class="h2">{{ 'product.related' | t }}</h2></div>
+      <div class="grid-products">
+        @for (r of related(); track r.id) {
+          <app-product-card [product]="r" (add)="addRelated($event)" (choose)="openRelated($event)" />
+        }
+      </div>
+    </section>
+  }
+
+  <div class="sticky-buy">
+    <div>
+      <strong>{{ p.price | money }}</strong>
+      <small>{{ p | loc: 'name' }}</small>
+    </div>
+    <button type="button" class="btn btn-primary" [disabled]="soldOut()" (click)="addToCart()">{{ 'common.add' | t }}</button>
+  </div>
+}

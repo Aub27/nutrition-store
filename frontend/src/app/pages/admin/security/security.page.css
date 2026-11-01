@@ -1,0 +1,242 @@
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+.left {
+  display: grid;
+  gap: 1.2rem;
+}
+.form {
+  display: grid;
+  gap: 1.1rem;
+}
+.pw {
+  position: relative;
+}
+.pw .input {
+  padding-inline-end: 3rem;
+}
+.eye {
+  position: absolute;
+  inset-inline-end: 6px;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  inline-size: 38px;
+  block-size: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+.eye:hover {
+  background: var(--p-50);
+  color: var(--p-600);
+}
+.meter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-block-start: 0.4rem;
+}
+.meter i {
+  block-size: 6px;
+  border-radius: 6px;
+  background: var(--p-100);
+  transition: background 0.3s;
+}
+.meter[data-level='1'] i:nth-child(-n + 1) {
+  background: var(--danger);
+}
+.meter[data-level='2'] i:nth-child(-n + 2) {
+  background: var(--warn);
+}
+.meter[data-level='3'] i:nth-child(-n + 3) {
+  background: #84cc16;
+}
+.meter[data-level='4'] i {
+  background: var(--ok);
+}
+.rules {
+  display: grid;
+  gap: 0.3rem;
+  margin-block-start: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.rules li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+.rules li app-icon {
+  inline-size: 20px;
+  block-size: 20px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--p-100);
+  color: var(--p-400);
+  flex: none;
+}
+.rules li.ok {
+  color: #0b7a49;
+}
+.rules li.ok app-icon {
+  background: var(--ok);
+  color: #fff;
+}
+.rules small {
+  opacity: 0.7;
+}
+.small {
+  font-size: 0.88rem;
+  margin-block-end: 1rem;
+}
+.sec-ico.red {
+  color: var(--danger);
+  background: #fff0f2;
+  border-color: #ffd0d8;
+}
+.btn.out {
+  color: var(--danger);
+  border-color: #ffd0d8;
+}
+.btn.out:hover {
+  background: #fff0f2;
+  border-color: var(--danger);
+}
+.grow {
+  flex: 1;
+}
+.sk {
+  block-size: 64px;
+  margin-block-end: 0.7rem;
+}
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+}
+.feed {
+  display: grid;
+  gap: 0.2rem;
+  max-block-size: 80dvh;
+  overflow-y: auto;
+  padding-inline-end: 0.3rem;
+}
+.day {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  padding: 0.6rem 0;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--p-500);
+  background: linear-gradient(#fff 75%, transparent);
+}
+.tl {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding: 0;
+  margin-block-end: 0.8rem;
+}
+.ev {
+  position: relative;
+  display: flex;
+  gap: 0.9rem;
+  padding-block-end: 1.1rem;
+}
+.ev::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 15px;
+  inset-block: 32px 0;
+  inline-size: 2px;
+  background: var(--line);
+}
+.ev:last-child::before {
+  display: none;
+}
+.ev-ico {
+  flex: none;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--p-600);
+  background: var(--p-100);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--line);
+  z-index: 1;
+}
+.ev[data-tone='ok'] .ev-ico {
+  color: #0b7a49;
+  background: #e7fbf1;
+}
+.ev[data-tone='bad'] .ev-ico {
+  color: var(--danger);
+  background: #fff0f2;
+}
+.ev[data-tone='warn'] .ev-ico {
+  color: #a86500;
+  background: #fff6e0;
+}
+.ev-main {
+  flex: 1;
+  min-inline-size: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+.ev-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.ev-top strong {
+  color: var(--ink);
+  font-size: 0.93rem;
+}
+.ev-top time {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+.ev-detail {
+  font-size: 0.86rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.ev-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.ev-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.ent {
+  padding: 0.05rem 0.5rem;
+  border-radius: 99px;
+  background: var(--p-50);
+  color: var(--p-600);
+  font-weight: 650;
+}
+@media (max-width: 1000px) {
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

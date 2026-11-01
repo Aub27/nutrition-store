@@ -1,0 +1,177 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="grid-lines"></div>
+  <div class="container hero-in">
+    <div class="hero-copy">
+      <span class="pill reveal"><app-icon name="sparkle" [size]="15" /> {{ 'hero.eyebrow' | t }}</span>
+      <h1 class="reveal" style="animation-delay: 0.08s">
+        {{ 'hero.title1' | t }}<br />
+        <span class="text-grad-light">{{ 'hero.title2' | t }}</span>
+      </h1>
+      <p class="reveal" style="animation-delay: 0.16s">{{ 'hero.subtitle' | t }}</p>
+      <div class="hero-cta reveal" style="animation-delay: 0.24s">
+        <a routerLink="/boutique" class="btn btn-light btn-lg">{{ 'hero.cta' | t }} <app-icon name="arrow-right" [size]="18" /></a>
+        <a href="#goals" class="btn btn-glass btn-lg">{{ 'hero.cta2' | t }}</a>
+      </div>
+      <ul class="hero-stats reveal" style="animation-delay: 0.32s">
+        <li><app-icon name="cash" [size]="20" /> {{ 'hero.stat1' | t }}</li>
+        <li><app-icon name="shield" [size]="20" /> {{ 'hero.stat2' | t }}</li>
+        <li><app-icon name="truck" [size]="20" /> {{ 'hero.stat3' | t }}</li>
+      </ul>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <div class="orb-ring r1"></div>
+      <div class="orb-ring r2"></div>
+      <div class="tub">
+        <div class="tub-lid"></div>
+        <div class="tub-body">
+          <app-icon name="bolt" [size]="64" [stroke]="1.6" />
+          <span>{{ settings()?.site_title }}</span>
+        </div>
+      </div>
+      <div class="float f1 glass"><app-icon name="flame" [size]="20" /><span>+24 g</span></div>
+      <div class="float f2 glass"><app-icon name="dumbbell" [size]="20" /><span>Pro</span></div>
+      <div class="float f3 glass"><app-icon name="leaf" [size]="20" /><span>100%</span></div>
+    </div>
+  </div>
+</section>
+
+@if (!loading() && !hasProducts() && categories().length === 0) {
+  <section class="container">
+    <div class="empty-state card soon">
+      <div class="orb"><app-icon name="package" [size]="34" /></div>
+      <h3>{{ 'home.empty.title' | t }}</h3>
+      <p class="muted">{{ 'home.empty.desc' | t }}</p>
+    </div>
+  </section>
+}
+
+<!-- GOALS -->
+@if (goals().length) {
+  <section class="section container" id="goals">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{{ 'home.goals.eyebrow' | t }}</span>
+        <h2 class="h2">{{ 'home.goals.title' | t }}</h2>
+      </div>
+    </div>
+    <div class="goals">
+      @for (g of goals(); track g.slug; let i = $index) {
+        <a class="goal" [routerLink]="['/boutique']" [queryParams]="{ goal: g.slug }" [style.--i]="i">
+          <span class="goal-ico"><app-icon [name]="g.icon" [size]="30" [stroke]="1.7" /></span>
+          <strong>{{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }}</strong>
+          <span class="goal-go"><app-icon name="arrow-right" [size]="18" /></span>
+        </a>
+      }
+    </div>
+  </section>
+}
+
+<!-- CATEGORIES -->
+@if (categories().length) {
+  <section class="section container tight">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{{ 'home.categories.eyebrow' | t }}</span>
+        <h2 class="h2">{{ 'home.categories.title' | t }}</h2>
+      </div>
+      <a routerLink="/boutique" class="btn btn-ghost btn-sm">{{ 'common.viewAll' | t }}</a>
+    </div>
+    <div class="cats">
+      @for (c of categories(); track c.id) {
+        <a class="cat" [routerLink]="['/boutique']" [queryParams]="{ category: c.slug }">
+          <span class="cat-img"><app-media [url]="c.image_url" [alt]="c | loc: 'name'" [seed]="c.id" [iconSize]="34" /></span>
+          <strong>{{ c | loc: 'name' }}</strong>
+        </a>
+      }
+      <!-- LATER (clothing & women's space — intentionally disabled for now):
+      <a class="cat" routerLink="/boutique" [queryParams]="{ category: 'vetements' }">Vêtements & accessoires</a>
+      <a class="cat" routerLink="/boutique" [queryParams]="{ category: 'femme' }">Espace femme</a>
+      -->
+    </div>
+  </section>
+}
+
+<!-- NEW -->
+@if (fresh().length) {
+  <section class="section container tight">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{{ 'home.new.eyebrow' | t }}</span>
+        <h2 class="h2">{{ 'home.new.title' | t }}</h2>
+      </div>
+      <a routerLink="/boutique" [queryParams]="{ is_new: true }" class="btn btn-ghost btn-sm">{{ 'common.viewAll' | t }}</a>
+    </div>
+    <div class="grid-products">
+      @for (p of fresh(); track p.id) {
+        <app-product-card [product]="p" (add)="add($event)" (choose)="choose($event)" />
+      }
+    </div>
+  </section>
+}
+
+<!-- BANNER -->
+<section class="container">
+  <div class="banner">
+    <div class="banner-glow"></div>
+    <div>
+      <h2>{{ 'home.banner.title' | t: { amount: threshold() ?? '—' } }}</h2>
+      <p>{{ 'home.banner.sub' | t }}</p>
+    </div>
+    <a routerLink="/boutique" class="btn btn-light btn-lg">{{ 'home.banner.cta' | t }} <app-icon name="arrow-right" [size]="18" /></a>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+@if (best().length) {
+  <section class="section container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{{ 'home.best.eyebrow' | t }}</span>
+        <h2 class="h2">{{ 'home.best.title' | t }}</h2>
+      </div>
+      <a routerLink="/boutique" [queryParams]="{ is_bestseller: true }" class="btn btn-ghost btn-sm">{{ 'common.viewAll' | t }}</a>
+    </div>
+    <div class="grid-products">
+      @for (p of best(); track p.id) {
+        <app-product-card [product]="p" (add)="add($event)" (choose)="choose($event)" />
+      }
+    </div>
+  </section>
+}
+
+<!-- PROMO -->
+@if (promo().length) {
+  <section class="section container tight">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">{{ 'home.promo.eyebrow' | t }}</span>
+        <h2 class="h2">{{ 'home.promo.title' | t }}</h2>
+      </div>
+      <a routerLink="/boutique" [queryParams]="{ on_sale: true }" class="btn btn-ghost btn-sm">{{ 'common.viewAll' | t }}</a>
+    </div>
+    <div class="grid-products">
+      @for (p of promo(); track p.id) {
+        <app-product-card [product]="p" (add)="add($event)" (choose)="choose($event)" />
+      }
+    </div>
+  </section>
+}
+
+<!-- BRANDS -->
+@if (brands().length) {
+  <section class="section container tight">
+    <div class="section-head">
+      <h2 class="h2">{{ 'home.brands.title' | t }}</h2>
+    </div>
+    <div class="brands">
+      @for (b of brands(); track b) {
+        <a [routerLink]="['/boutique']" [queryParams]="{ brand: b }" class="brand-pill">{{ b }}</a>
+      }
+    </div>
+  </section>
+}

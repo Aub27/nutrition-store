@@ -1,0 +1,209 @@
+.narrow {
+  max-inline-size: 1000px;
+}
+.lead {
+  max-inline-size: 56ch;
+  font-size: 0.92rem;
+}
+.retry {
+  margin-block-start: 0.5rem;
+}
+.list {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+}
+.sk {
+  block-size: 92px;
+  border-radius: var(--r-lg);
+}
+.ccard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1rem 0.8rem 0.6rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm);
+  animation: rise 0.5s var(--ease) both;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s, opacity 0.2s;
+}
+.ccard:hover {
+  box-shadow: var(--sh);
+  border-color: var(--p-200);
+}
+.ccard.is-off {
+  background: color-mix(in srgb, var(--bg) 70%, #fff);
+}
+.ccard.is-off .thumb,
+.ccard.is-off .info {
+  opacity: 0.6;
+}
+.ccard.is-dragging {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+.ccard.drop-before::before,
+.ccard.drop-after::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0.5rem;
+  block-size: 4px;
+  border-radius: 4px;
+  background: var(--grad);
+  box-shadow: var(--glow);
+}
+.ccard.drop-before::before {
+  inset-block-start: -8px;
+}
+.ccard.drop-after::after {
+  inset-block-end: -8px;
+}
+.handle {
+  flex: none;
+  inline-size: 28px;
+  display: grid;
+  place-items: center;
+  color: #b5a9d3;
+  cursor: grab;
+  touch-action: none;
+}
+.ccard:hover .handle {
+  color: var(--p-500);
+}
+.ccard:active .handle {
+  cursor: grabbing;
+}
+.rank {
+  flex: none;
+  inline-size: 28px;
+  block-size: 28px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--p-600);
+  background: var(--p-50);
+}
+.thumb {
+  flex: none;
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.info {
+  flex: 1;
+  min-inline-size: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+.nm {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.meta code {
+  font-family: ui-monospace, 'Cascadia Mono', monospace;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 8px;
+  background: var(--p-50);
+  color: var(--p-700);
+}
+.count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+}
+.acts {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex: none;
+}
+.acts adm-switch {
+  margin-inline: 0.5rem;
+}
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-start: 1.4rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.lnk {
+  color: var(--p-600);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* drawer */
+.d-title h3 {
+  font-size: 1.3rem;
+}
+.form {
+  display: grid;
+  gap: 1.1rem;
+}
+.row-sw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--r);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.row-sw strong {
+  display: block;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+}
+.row-sw small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.d-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+@media (max-width: 720px) {
+  .ccard {
+    flex-wrap: wrap;
+    padding: 0.8rem;
+  }
+  .handle,
+  .rank {
+    display: none;
+  }
+  .info {
+    flex-basis: calc(100% - 80px);
+  }
+  .acts {
+    inline-size: 100%;
+    justify-content: space-between;
+    padding-block-start: 0.5rem;
+    border-block-start: 1px solid var(--line);
+  }
+}

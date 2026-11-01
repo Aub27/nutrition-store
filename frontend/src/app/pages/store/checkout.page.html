@@ -1,0 +1,112 @@
+<div class="container wrap">
+  <h1>{{ 'checkout.title' | t }}</h1>
+
+  @if (empty()) {
+    <div class="empty-state card">
+      <div class="orb"><app-icon name="cart" [size]="34" /></div>
+      <h3>{{ 'cart.empty.title' | t }}</h3>
+      <a routerLink="/boutique" class="btn btn-primary">{{ 'cart.continue' | t }}</a>
+    </div>
+  } @else {
+    <form class="layout" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="col">
+        <section class="card box">
+          <h2><span class="n">1</span> {{ 'checkout.delivery' | t }}</h2>
+          <div class="grid">
+            <div class="field span2">
+              <label for="name">{{ 'checkout.name' | t }} *</label>
+              <input id="name" class="input" formControlName="customer_name" autocomplete="name" maxlength="100" [class.is-invalid]="invalid('customer_name')" />
+              @if (invalid('customer_name')) { <span class="field-error">{{ 'checkout.err.name' | t }}</span> }
+            </div>
+            <div class="field">
+              <label for="phone">{{ 'checkout.phone' | t }} *</label>
+              <input id="phone" class="input" formControlName="phone_number" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78" [class.is-invalid]="invalid('phone_number')" />
+              @if (invalid('phone_number')) { <span class="field-error">{{ 'checkout.err.phone' | t }}</span> } @else { <span class="hint">{{ 'checkout.phoneHint' | t }}</span> }
+            </div>
+            <div class="field">
+              <label for="email">{{ 'checkout.email' | t }} <small class="muted">({{ 'common.optional' | t }})</small></label>
+              <input id="email" class="input" formControlName="email" type="email" autocomplete="email" [class.is-invalid]="invalid('email')" />
+              @if (invalid('email')) { <span class="field-error">{{ 'checkout.err.email' | t }}</span> }
+            </div>
+            <div class="field span2">
+              <label for="addr">{{ 'checkout.address' | t }} *</label>
+              <input id="addr" class="input" formControlName="address_line_1" autocomplete="address-line1" maxlength="300" [class.is-invalid]="invalid('address_line_1')" />
+              @if (invalid('address_line_1')) { <span class="field-error">{{ 'checkout.err.address' | t }}</span> }
+            </div>
+            <div class="field span2">
+              <label for="addr2">{{ 'checkout.address2' | t }} <small class="muted">({{ 'common.optional' | t }})</small></label>
+              <input id="addr2" class="input" formControlName="address_line_2" autocomplete="address-line2" maxlength="300" />
+            </div>
+            <div class="field">
+              <label for="city">{{ 'checkout.city' | t }} *</label>
+              <input id="city" class="input" formControlName="city" autocomplete="address-level2" maxlength="100" [class.is-invalid]="invalid('city')" />
+              @if (invalid('city')) { <span class="field-error">{{ 'checkout.err.city' | t }}</span> }
+            </div>
+            <div class="field">
+              <label for="zip">{{ 'checkout.postal' | t }} <small class="muted">({{ 'common.optional' | t }})</small></label>
+              <input id="zip" class="input" formControlName="postal_code" autocomplete="postal-code" maxlength="20" />
+            </div>
+            <div class="field span2">
+              <label for="note">{{ 'checkout.note' | t }} <small class="muted">({{ 'common.optional' | t }})</small></label>
+              <textarea id="note" class="textarea" formControlName="customer_note" maxlength="500" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="card box">
+          <h2><span class="n">2</span> {{ 'checkout.payment' | t }}</h2>
+          <label class="pay on">
+            <input type="radio" checked disabled />
+            <span class="pay-ico"><app-icon name="cash" [size]="24" /></span>
+            <span class="pay-txt">
+              <strong>{{ 'checkout.cod' | t }}</strong>
+              <small>{{ 'checkout.codDesc' | t }}</small>
+            </span>
+            <app-icon name="check" [size]="22" [stroke]="2.6" />
+          </label>
+          <!-- LATER: card payment option. Needs a payment provider + backend support (see DEPLOYMENT.md "Adding card payments"). -->
+          <p class="soon"><app-icon name="lock" [size]="16" /> {{ 'checkout.cardSoon' | t }}</p>
+        </section>
+
+        <section class="card box consent">
+          <label class="check" [class.bad]="invalid('consent')">
+            <input type="checkbox" formControlName="consent" />
+            <span>{{ 'checkout.consent' | t }} <a routerLink="/confidentialite" target="_blank" class="lnk">{{ 'checkout.privacyLink' | t }}</a></span>
+          </label>
+          @if (invalid('consent')) { <span class="field-error">{{ 'checkout.err.consent' | t }}</span> }
+        </section>
+      </div>
+
+      <aside class="card sum">
+        <h2>{{ 'checkout.summary' | t }}</h2>
+        <ul class="items">
+          @for (l of cart.lines(); track l.product_id + '-' + l.option) {
+            <li [class.bad]="!l.available">
+              <span class="thumb"><app-media [url]="l.image_url" [alt]="l | loc: 'name'" [seed]="l.product_id" [iconSize]="20" /><b>{{ l.quantity }}</b></span>
+              <span class="nm">{{ l | loc: 'name' }}@if (l.option) { <small>{{ l.option }}</small> }
+                @if (l.issue) { <small class="issue">{{ 'cart.issue.' + l.issue | t }}</small> }
+              </span>
+              <strong>{{ l.line_total | money }}</strong>
+            </li>
+          }
+        </ul>
+        <dl>
+          <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.subtotal() | money }}</dd></div>
+          <div><dt>{{ 'cart.delivery' | t }}</dt><dd>{{ cart.freeDelivery() ? ('common.free' | t) : (cart.deliveryFee() | money) }}</dd></div>
+          <div class="grand"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total() | money }}</dd></div>
+        </dl>
+        @if (serverError(); as e) {
+          <div class="alert" role="alert"><app-icon name="alert" [size]="18" /> {{ e }}</div>
+        }
+        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="submitting()">
+          @if (submitting()) {
+            <span class="spinner"></span> {{ 'checkout.submitting' | t }}
+          } @else {
+            <app-icon name="lock" [size]="18" /> {{ 'checkout.submit' | t }}
+          }
+        </button>
+        <p class="secure"><app-icon name="shield" [size]="16" /> {{ 'product.secure' | t }} · {{ 'cart.codNote' | t }}</p>
+      </aside>
+    </form>
+  }
+</div>

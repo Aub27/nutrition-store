@@ -1,0 +1,13 @@
+# Automatic HTTPS (Let's Encrypt) in front of the app. {$DOMAIN} comes from the .env file.
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy web:8080
+	header {
+		-Server
+	}
+}
+
+# Optional: redirect www to the apex domain
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}

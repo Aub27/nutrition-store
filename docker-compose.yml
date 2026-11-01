@@ -1,0 +1,81 @@
+name: nutrition-store
+
+# Production stack: Caddy (HTTPS) → nginx (SPA + API proxy) → FastAPI → PostgreSQL.
+# Only Caddy is exposed to the internet (ports 80/443). Database and API stay on a private network.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nutrition}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-nutrition}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-nutrition}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-nutrition}
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env (python -c "import secrets; print(secrets.token_urlsafe(48))")}
+      CORS_ORIGINS: https://${DOMAIN:?Set DOMAIN in .env}
+      ALLOWED_HOSTS: ${DOMAIN},www.${DOMAIN}
+      TRUST_PROXY: 'true'
+      COOKIE_SAMESITE: strict
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      ORDER_PREFIX: ${ORDER_PREFIX:-NS}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    volumes:
+      - uploads:/data/uploads
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs: [/tmp]
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on: [backend]
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [web]
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+
+networks:
+  internal:
+
+volumes:
+  db_data:
+  uploads:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,310 @@
+<a class="skip" href="#main">{{ 'common.skip' | t }}</a>
+
+<div class="topbar">
+  <div class="container topbar-in">
+    <p class="ann"><app-icon name="sparkle" [size]="14" /> {{ announcement() }}</p>
+    <div class="top-right">
+      @if (phoneHref(); as tel) {
+        <a [href]="tel" class="top-link"><app-icon name="phone" [size]="14" /> {{ settings()?.contact_phone }}</a>
+      }
+      <button type="button" class="top-link lang" (click)="i18n.toggle()" [attr.aria-label]="'nav.language' | t">
+        <app-icon name="globe" [size]="14" /> {{ 'nav.language' | t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<header class="header" [class.scrolled]="scrolled()" (mouseleave)="megaOpen.set(false)">
+  <div class="container header-in">
+    <button type="button" class="icon-btn burger" (click)="ui.toggleMenu()" [attr.aria-label]="'nav.menu' | t">
+      <app-icon name="menu" [size]="24" />
+    </button>
+
+    <a routerLink="/" class="brand" aria-label="Accueil">
+      @if (logo(); as l) {
+        <img [src]="l" alt="" class="brand-img" />
+      } @else {
+        <span class="brand-mark" aria-hidden="true"><app-icon name="bolt" [size]="22" [stroke]="2.4" /></span>
+      }
+      <span class="brand-txt">
+        <strong>{{ settings()?.site_title ?? 'Nutrition Store' }}</strong>
+        @if (tagline()) {
+          <small>{{ tagline() }}</small>
+        }
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ 'nav.home' | t }}</a>
+      <div class="has-mega" (mouseenter)="megaOpen.set(true)">
+        <button
+          type="button"
+          class="nav-btn"
+          [class.active]="megaOpen()"
+          [attr.aria-expanded]="megaOpen()"
+          (click)="megaOpen.set(!megaOpen())"
+        >
+          {{ 'nav.shop' | t }} <app-icon name="chevron-down" [size]="16" />
+        </button>
+      </div>
+      <a routerLink="/boutique" [queryParams]="{ on_sale: true }" class="hot">{{ 'nav.promos' | t }}</a>
+      <a routerLink="/boutique" [queryParams]="{ is_new: true }">{{ 'nav.new' | t }}</a>
+      <a routerLink="/contact" routerLinkActive="active">{{ 'nav.contact' | t }}</a>
+      <!-- LATER (clothing & women's space — intentionally disabled for now):
+      <a routerLink="/boutique" [queryParams]="{ category: 'vetements' }">Vêtements</a>
+      <a routerLink="/boutique" [queryParams]="{ category: 'femme' }">Espace femme</a>
+      -->
+    </nav>
+
+    <form class="search" role="search" (submit)="submitSearch($event)">
+      <app-icon name="search" [size]="18" />
+      <input
+        type="search"
+        name="q"
+        autocomplete="off"
+        maxlength="100"
+        [value]="query()"
+        (input)="onSearchInput($event)"
+        (focus)="searchOpen.set(true)"
+        (blur)="closeSearchSoon()"
+        [placeholder]="'nav.search' | t"
+        [attr.aria-label]="'nav.search' | t"
+      />
+      @if (searchOpen() && query().trim().length >= 2) {
+        <div class="suggest">
+          @if (searching()) {
+            <div class="sg-row"><span class="skeleton" style="width: 44px; height: 44px"></span><span class="skeleton" style="flex: 1; height: 14px"></span></div>
+          } @else {
+            @for (p of results(); track p.id) {
+              <a class="sg-row" [routerLink]="['/produit', p.slug]">
+                <span class="sg-img"><app-media [url]="p.image_url" [alt]="p | loc: 'name'" [seed]="p.id" [iconSize]="22" /></span>
+                <span class="sg-txt">
+                  <strong>{{ p | loc: 'name' }}</strong>
+                  <small>{{ p.brand }}</small>
+                </span>
+                <span class="sg-price">{{ p.price | money }}</span>
+              </a>
+            } @empty {
+              <p class="sg-empty">{{ 'nav.searchNoResult' | t }}</p>
+            }
+            @if (results().length) {
+              <button type="submit" class="sg-all">{{ 'nav.searchAll' | t }} <app-icon name="arrow-right" [size]="16" /></button>
+            }
+          }
+        </div>
+      }
+    </form>
+
+    <button type="button" class="cart-btn" (click)="ui.openCart()" [attr.aria-label]="'nav.cart' | t">
+      <app-icon name="cart" [size]="22" />
+      @if (cart.itemCount() > 0) {
+        <span class="cart-count">{{ cart.itemCount() }}</span>
+      }
+    </button>
+  </div>
+
+  @if (megaOpen()) {
+    <div class="mega" (mouseenter)="megaOpen.set(true)">
+      <div class="container mega-in">
+        <div class="mega-col">
+          <h4>{{ 'nav.goals' | t }}</h4>
+          @for (g of goals(); track g.slug) {
+            <a [routerLink]="['/boutique']" [queryParams]="{ goal: g.slug }" class="mega-link">
+              <span class="mega-ico"><app-icon [name]="g.icon" [size]="18" /></span>
+              {{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }}
+            </a>
+          }
+        </div>
+        <div class="mega-col mega-cats">
+          <h4>{{ 'nav.categories' | t }}</h4>
+          <div class="mega-grid">
+            @for (c of categories(); track c.id) {
+              <a [routerLink]="['/boutique']" [queryParams]="{ category: c.slug }" class="mega-link plain">{{ c | loc: 'name' }}</a>
+            } @empty {
+              <p class="muted">{{ 'home.empty.desc' | t }}</p>
+            }
+          </div>
+          <!-- LATER (clothing & women's space — intentionally disabled for now):
+          category links "Vêtements & accessoires" and "Espace femme" will be added here.
+          -->
+        </div>
+        <a class="mega-promo" routerLink="/boutique" [queryParams]="{ on_sale: true }">
+          <span class="badge badge-sale">{{ 'nav.promos' | t }}</span>
+          <strong>{{ 'home.promo.title' | t }}</strong>
+          <span class="btn btn-light btn-sm">{{ 'common.viewAll' | t }} <app-icon name="arrow-right" [size]="16" /></span>
+        </a>
+      </div>
+    </div>
+  }
+</header>
+
+<!-- Mobile menu -->
+<app-drawer [open]="ui.menuOpen()" side="left" width="340px" [label]="'nav.menu' | t" (closed)="ui.menuOpen.set(false)">
+  <strong drawer-title class="drawer-h">{{ settings()?.site_title }}</strong>
+  <form class="search m-search" (submit)="submitSearch($event)">
+    <app-icon name="search" [size]="18" />
+    <input type="search" name="mq" maxlength="100" [value]="query()" (input)="onSearchInput($event)" [placeholder]="'nav.search' | t" />
+  </form>
+  <nav class="m-nav">
+    <a routerLink="/">{{ 'nav.home' | t }}</a>
+    <a routerLink="/boutique">{{ 'nav.shop' | t }}</a>
+    <a routerLink="/boutique" [queryParams]="{ on_sale: true }">{{ 'nav.promos' | t }}</a>
+    <a routerLink="/boutique" [queryParams]="{ is_new: true }">{{ 'nav.new' | t }}</a>
+    <h5>{{ 'nav.goals' | t }}</h5>
+    @for (g of goals(); track g.slug) {
+      <a [routerLink]="['/boutique']" [queryParams]="{ goal: g.slug }" class="sub">
+        <app-icon [name]="g.icon" [size]="16" /> {{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }}
+      </a>
+    }
+    <h5>{{ 'nav.categories' | t }}</h5>
+    @for (c of categories(); track c.id) {
+      <a [routerLink]="['/boutique']" [queryParams]="{ category: c.slug }" class="sub">{{ c | loc: 'name' }}</a>
+    }
+    <a routerLink="/contact">{{ 'nav.contact' | t }}</a>
+  </nav>
+  <button type="button" class="btn btn-ghost btn-block" drawer-footer (click)="i18n.toggle()">
+    <app-icon name="globe" [size]="18" /> {{ 'nav.language' | t }}
+  </button>
+</app-drawer>
+
+<!-- Cart drawer -->
+<app-drawer [open]="ui.cartOpen()" [label]="'cart.title' | t" width="460px" (closed)="ui.closeCart()">
+  <h2 drawer-title class="drawer-h">{{ 'cart.title' | t }} <span class="count">{{ cart.itemCount() }}</span></h2>
+
+  @if (cart.isEmpty()) {
+    <div class="empty-state">
+      <div class="orb"><app-icon name="cart" [size]="34" /></div>
+      <h3>{{ 'cart.empty.title' | t }}</h3>
+      <p class="muted">{{ 'cart.empty.desc' | t }}</p>
+      <a routerLink="/boutique" class="btn btn-primary" (click)="ui.closeCart()">{{ 'cart.continue' | t }}</a>
+    </div>
+  } @else {
+    @if (threshold(); as thr) {
+      <div class="free-bar">
+        <p>
+          @if (cart.freeDelivery()) {
+            <app-icon name="check" [size]="16" [stroke]="2.6" /> {{ 'cart.freeReached' | t }}
+          } @else if (cart.amountToFree() !== null) {
+            <app-icon name="truck" [size]="16" /> {{ 'cart.freeLeft' | t: { amount: cart.amountToFree() } }}
+          }
+        </p>
+        <div class="bar"><span [style.width.%]="cart.freeDelivery() ? 100 : freeProgress()"></span></div>
+      </div>
+    }
+    <ul class="lines">
+      @for (l of cart.lines(); track l.product_id + '-' + l.option) {
+        <li class="line" [class.bad]="!l.available">
+          <a class="line-img" [routerLink]="['/produit', l.slug]" (click)="ui.closeCart()">
+            <app-media [url]="l.image_url" [alt]="l | loc: 'name'" [seed]="l.product_id" [iconSize]="24" />
+          </a>
+          <div class="line-main">
+            <a [routerLink]="['/produit', l.slug]" (click)="ui.closeCart()" class="line-name">{{ l | loc: 'name' }}</a>
+            @if (l.option) {
+              <small class="muted">{{ l.option }}</small>
+            }
+            @if (l.issue) {
+              <small class="issue">{{ 'cart.issue.' + l.issue | t }}</small>
+            }
+            <div class="line-foot">
+              <div class="qty">
+                <button type="button" (click)="setQty(l.product_id, l.option, l.quantity - 1)" aria-label="-"><app-icon name="minus" [size]="14" [stroke]="2.5" /></button>
+                <span>{{ l.quantity }}</span>
+                <button type="button" (click)="setQty(l.product_id, l.option, l.quantity + 1)" aria-label="+"><app-icon name="plus" [size]="14" [stroke]="2.5" /></button>
+              </div>
+              <strong>{{ l.line_total | money }}</strong>
+            </div>
+          </div>
+          <button type="button" class="rm" (click)="cart.remove(l.product_id, l.option)" [attr.aria-label]="'cart.remove' | t">
+            <app-icon name="trash" [size]="16" />
+          </button>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!cart.isEmpty()) {
+    <div drawer-footer class="cart-foot">
+      <dl>
+        <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.subtotal() | money }}</dd></div>
+        <div>
+          <dt>{{ 'cart.delivery' | t }}</dt>
+          <dd>{{ cart.freeDelivery() ? ('common.free' | t) : (cart.deliveryFee() | money) }}</dd>
+        </div>
+        <div class="grand"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total() | money }}</dd></div>
+      </dl>
+      <p class="cod"><app-icon name="cash" [size]="16" /> {{ 'cart.codNote' | t }}</p>
+      <a routerLink="/commande" class="btn btn-primary btn-lg btn-block" [class.is-disabled]="!cart.allAvailable()" (click)="ui.closeCart()">
+        {{ 'cart.checkout' | t }} <app-icon name="arrow-right" [size]="18" />
+      </a>
+      <a routerLink="/panier" class="view-cart" (click)="ui.closeCart()">{{ 'nav.cart' | t }}</a>
+    </div>
+  }
+</app-drawer>
+
+<main id="main" class="main"><router-outlet /></main>
+
+@if (whatsappHref(); as wa) {
+  <a class="wa" [href]="wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><app-icon name="whatsapp" [size]="28" /></a>
+}
+
+<footer class="footer">
+  <div class="container">
+    <div class="trust">
+      <div><app-icon name="cash" [size]="26" /><span><strong>{{ 'trust.cod.title' | t }}</strong>{{ 'trust.cod.desc' | t }}</span></div>
+      <div><app-icon name="truck" [size]="26" /><span><strong>{{ 'trust.delivery.title' | t }}</strong>{{ 'trust.delivery.desc' | t }}</span></div>
+      <div><app-icon name="shield" [size]="26" /><span><strong>{{ 'trust.authentic.title' | t }}</strong>{{ 'trust.authentic.desc' | t }}</span></div>
+      <div><app-icon name="chat" [size]="26" /><span><strong>{{ 'trust.support.title' | t }}</strong>{{ 'trust.support.desc' | t }}</span></div>
+    </div>
+
+    <div class="cols">
+      <div class="col brand-col">
+        <a routerLink="/" class="brand light">
+          <span class="brand-mark"><app-icon name="bolt" [size]="22" [stroke]="2.4" /></span>
+          <span class="brand-txt"><strong>{{ settings()?.site_title }}</strong></span>
+        </a>
+        <p>{{ tagline() }}</p>
+        <div class="social">
+          @if (settings()?.instagram_url; as u) {
+            <a [href]="u" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><app-icon name="instagram" [size]="20" /></a>
+          }
+          @if (settings()?.facebook_url; as u) {
+            <a [href]="u" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><app-icon name="facebook" [size]="20" /></a>
+          }
+          @if (whatsappHref(); as wa) {
+            <a [href]="wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><app-icon name="whatsapp" [size]="20" /></a>
+          }
+        </div>
+      </div>
+      <div class="col">
+        <h5>{{ 'footer.shop' | t }}</h5>
+        @for (c of categories().slice(0, 6); track c.id) {
+          <a [routerLink]="['/boutique']" [queryParams]="{ category: c.slug }">{{ c | loc: 'name' }}</a>
+        }
+        <a routerLink="/boutique">{{ 'common.viewAll' | t }}</a>
+      </div>
+      <div class="col">
+        <h5>{{ 'footer.help' | t }}</h5>
+        <a routerLink="/contact">{{ 'nav.contact' | t }}</a>
+        <a routerLink="/conditions">{{ 'footer.terms' | t }}</a>
+        <a routerLink="/confidentialite">{{ 'footer.privacy' | t }}</a>
+      </div>
+      <div class="col">
+        <h5>{{ 'nav.contact' | t }}</h5>
+        @if (settings(); as s) {
+          @if (phoneHref(); as tel) {
+            <a [href]="tel"><app-icon name="phone" [size]="16" /> {{ s.contact_phone }}</a>
+          }
+          <a [href]="'mailto:' + s.contact_email"><app-icon name="mail" [size]="16" /> {{ s.contact_email }}</a>
+          @if (s.contact_address) {
+            <span class="addr"><app-icon name="pin" [size]="16" /> {{ s.contact_address }}</span>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="legal">
+      <p>© {{ year }} {{ settings()?.site_title }}. {{ 'footer.rights' | t }}</p>
+      <p class="disc">{{ 'footer.disclaimer' | t }}</p>
+    </div>
+  </div>
+</footer>

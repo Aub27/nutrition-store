@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.angular/
+out-tsc/
+.tmp-*/
+
+# Secrets and local data: never commit
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite3
+*.pem
+*.key
+uploads/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db

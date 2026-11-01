@@ -1,0 +1,195 @@
+<section class="page-head">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a routerLink="/">{{ 'nav.home' | t }}</a>
+      <app-icon name="chevron-right" [size]="14" />
+      <span>{{ 'shop.title' | t }}</span>
+      @if (activeCategory(); as c) {
+        <app-icon name="chevron-right" [size]="14" />
+        <span>{{ c | loc: 'name' }}</span>
+      }
+    </nav>
+    <h1>
+      @if (query().q) {
+        {{ 'shop.search' | t: { q: query().q } }}
+      } @else if (activeCategory(); as c) {
+        {{ c | loc: 'name' }}
+      } @else if (activeGoal(); as g) {
+        {{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }}
+      } @else {
+        {{ 'shop.title' | t }}
+      }
+    </h1>
+    @if (activeCategory(); as c) {
+      @if (c | loc: 'description') {
+        <p class="muted desc">{{ c | loc: 'description' }}</p>
+      }
+    }
+  </div>
+</section>
+
+<div class="container shop">
+  <!-- filters (desktop) -->
+  <aside class="filters card">
+    <ng-container *ngTemplateOutlet="filterBody" />
+  </aside>
+
+  <section class="results">
+    <div class="toolbar">
+      <button type="button" class="btn btn-ghost btn-sm filter-btn" (click)="filtersOpen.set(true)">
+        <app-icon name="filter" [size]="16" /> {{ 'shop.filters' | t }}
+        @if (activeCount() > 0) {
+          <span class="dot">{{ activeCount() }}</span>
+        }
+      </button>
+      <p class="count">{{ 'shop.results' | t: { n: result().total } }}</p>
+      <label class="sort">
+        <span class="sr-only">{{ 'shop.sort' | t }}</span>
+        <select class="select" [value]="query().sort" (change)="set({ sort: inputValue($event) })">
+          @for (s of sorts; track s) {
+            <option [value]="s" [selected]="query().sort === s">{{ 'shop.sort.' + s | t }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    @if (activeCount() > 0) {
+      <div class="active-chips">
+        @if (query().q; as q) {
+          <button type="button" class="chip is-active" (click)="set({ q: null })">“{{ q }}” <app-icon name="close" [size]="14" /></button>
+        }
+        @if (query().category; as c) {
+          <button type="button" class="chip is-active" (click)="set({ category: null })">{{ activeCategory() ? (activeCategory()! | loc: 'name') : c }} <app-icon name="close" [size]="14" /></button>
+        }
+        @if (activeGoal(); as g) {
+          <button type="button" class="chip is-active" (click)="set({ goal: null })">{{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }} <app-icon name="close" [size]="14" /></button>
+        }
+        @if (query().brand; as b) {
+          <button type="button" class="chip is-active" (click)="set({ brand: null })">{{ b }} <app-icon name="close" [size]="14" /></button>
+        }
+        @if (query().on_sale) {
+          <button type="button" class="chip is-active" (click)="toggle('on_sale')">{{ 'shop.onSale' | t }} <app-icon name="close" [size]="14" /></button>
+        }
+        @if (query().is_new) {
+          <button type="button" class="chip is-active" (click)="toggle('is_new')">{{ 'nav.new' | t }} <app-icon name="close" [size]="14" /></button>
+        }
+        @if (query().is_bestseller) {
+          <button type="button" class="chip is-active" (click)="toggle('is_bestseller')">{{ 'common.bestseller' | t }} <app-icon name="close" [size]="14" /></button>
+        }
+        <button type="button" class="clear" (click)="reset()">{{ 'shop.clear' | t }}</button>
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="grid-products">
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+          <div class="sk">
+            <div class="skeleton sk-img"></div>
+            <div class="skeleton" style="height: 14px; width: 60%"></div>
+            <div class="skeleton" style="height: 14px; width: 85%"></div>
+            <div class="skeleton" style="height: 22px; width: 40%"></div>
+          </div>
+        }
+      </div>
+    } @else if (failed()) {
+      <div class="empty-state">
+        <div class="orb"><app-icon name="alert" [size]="34" /></div>
+        <h3>{{ 'common.error' | t }}</h3>
+        <button type="button" class="btn btn-primary" (click)="reset()">{{ 'common.retry' | t }}</button>
+      </div>
+    } @else if (result().items.length === 0) {
+      <div class="empty-state">
+        <div class="orb"><app-icon name="search" [size]="34" /></div>
+        <h3>{{ 'shop.empty.title' | t }}</h3>
+        <p class="muted">{{ 'shop.empty.desc' | t }}</p>
+        @if (activeCount() > 0) {
+          <button type="button" class="btn btn-primary" (click)="reset()">{{ 'shop.clear' | t }}</button>
+        }
+      </div>
+    } @else {
+      <div class="grid-products">
+        @for (p of result().items; track p.id) {
+          <app-product-card [product]="p" (add)="add($event)" (choose)="choose($event)" />
+        }
+      </div>
+      @if (result().pages > 1) {
+        <nav class="pager" aria-label="Pagination">
+          <button type="button" class="btn btn-ghost btn-sm" [disabled]="result().page <= 1" (click)="goPage(result().page - 1)">
+            <app-icon name="chevron-left" [size]="16" /> {{ 'shop.prev' | t }}
+          </button>
+          @for (p of pages(); track p) {
+            <button type="button" class="pg" [class.on]="p === result().page" (click)="goPage(p)">{{ p }}</button>
+          }
+          <button type="button" class="btn btn-ghost btn-sm" [disabled]="result().page >= result().pages" (click)="goPage(result().page + 1)">
+            {{ 'shop.next' | t }} <app-icon name="chevron-right" [size]="16" />
+          </button>
+        </nav>
+      }
+    }
+  </section>
+</div>
+
+<!-- filters (mobile drawer) -->
+<app-drawer [open]="filtersOpen()" side="left" width="360px" [label]="'shop.filters' | t" (closed)="filtersOpen.set(false)">
+  <h2 drawer-title style="font-size: 1.2rem">{{ 'shop.filters' | t }}</h2>
+  <ng-container *ngTemplateOutlet="filterBody" />
+  <button type="button" drawer-footer class="btn btn-primary btn-block" (click)="filtersOpen.set(false)">
+    {{ 'shop.apply' | t }} ({{ result().total }})
+  </button>
+</app-drawer>
+
+<ng-template #filterBody>
+  <div class="f-group">
+    <h4>{{ 'shop.category' | t }}</h4>
+    <div class="f-list">
+      <button type="button" class="f-item" [class.on]="!query().category" (click)="set({ category: null })">{{ 'shop.all' | t }}</button>
+      @for (c of categories(); track c.id) {
+        <button type="button" class="f-item" [class.on]="query().category === c.slug" (click)="set({ category: c.slug })">{{ c | loc: 'name' }}</button>
+      }
+    </div>
+  </div>
+
+  @if (goals().length) {
+    <div class="f-group">
+      <h4>{{ 'shop.goal' | t }}</h4>
+      <div class="f-chips">
+        @for (g of goals(); track g.slug) {
+          <button type="button" class="chip" [class.is-active]="query().goal === g.slug" (click)="set({ goal: query().goal === g.slug ? null : g.slug })">
+            {{ i18n.lang() === 'ar' ? g.name_ar : g.name_fr }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  @if (brands().length) {
+    <div class="f-group">
+      <h4>{{ 'shop.brand' | t }}</h4>
+      <div class="f-chips">
+        @for (b of brands(); track b) {
+          <button type="button" class="chip" [class.is-active]="query().brand === b" (click)="set({ brand: query().brand === b ? null : b })">{{ b }}</button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="f-group">
+    <h4>{{ 'shop.price' | t }}</h4>
+    <form class="price" (submit)="$event.preventDefault(); applyPrice()">
+      <input class="input" type="number" min="0" inputmode="numeric" [placeholder]="'shop.min' | t" [value]="minPrice()" (input)="minPrice.set(inputValue($event))" [attr.aria-label]="'shop.min' | t" />
+      <span>–</span>
+      <input class="input" type="number" min="0" inputmode="numeric" [placeholder]="'shop.max' | t" [value]="maxPrice()" (input)="maxPrice.set(inputValue($event))" [attr.aria-label]="'shop.max' | t" />
+      <button type="submit" class="btn btn-primary btn-icon" aria-label="OK"><app-icon name="check" [size]="18" [stroke]="2.5" /></button>
+    </form>
+  </div>
+
+  <div class="f-group">
+    <label class="switch"><input type="checkbox" [checked]="!!query().on_sale" (change)="toggle('on_sale')" /><span class="track"></span> {{ 'shop.onSale' | t }}</label>
+    <label class="switch"><input type="checkbox" [checked]="!!query().in_stock" (change)="toggle('in_stock')" /><span class="track"></span> {{ 'shop.inStock' | t }}</label>
+    <label class="switch"><input type="checkbox" [checked]="!!query().free_delivery" (change)="toggle('free_delivery')" /><span class="track"></span> {{ 'shop.freeDelivery' | t }}</label>
+  </div>
+
+  @if (activeCount() > 0) {
+    <button type="button" class="btn btn-ghost btn-block" (click)="reset()">{{ 'shop.clear' | t }}</button>
+  }
+</ng-template>
