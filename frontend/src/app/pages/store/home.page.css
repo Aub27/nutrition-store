@@ -407,10 +407,6 @@ h1 {
 .hero.has-photo .grid-lines {
   opacity: 0.25;
 }
-.hero.has-photo .hero-in {
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.5fr);
-  min-height: clamp(420px, 62vh, 640px);
-}
 
 @media (max-width: 900px) {
   .hero-in {

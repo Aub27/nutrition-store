@@ -21,11 +21,13 @@
     </button>
 
     <a routerLink="/" class="brand" aria-label="Accueil">
-      @if (logo(); as l) {
-        <img [src]="l" alt="" class="brand-img" />
-      } @else {
-        <span class="brand-mark" aria-hidden="true"><app-icon name="bolt" [size]="22" [stroke]="2.4" /></span>
-      }
+      <span class="brand-mark" [class.has-logo]="!!logo()" aria-hidden="true">
+        @if (logo(); as l) {
+          <img [src]="l" alt="" />
+        } @else {
+          <app-icon name="bolt" [size]="22" [stroke]="2.4" />
+        }
+      </span>
       <span class="brand-txt">
         <strong>{{ settings()?.site_title ?? 'Warmode Nutrition' }}</strong>
         @if (tagline()) {
@@ -259,7 +261,13 @@
     <div class="cols">
       <div class="col brand-col">
         <a routerLink="/" class="brand light">
-          <span class="brand-mark"><app-icon name="bolt" [size]="22" [stroke]="2.4" /></span>
+          <span class="brand-mark" [class.has-logo]="!!logo()">
+            @if (logo(); as l) {
+              <img [src]="l" alt="" />
+            } @else {
+              <app-icon name="bolt" [size]="22" [stroke]="2.4" />
+            }
+          </span>
           <span class="brand-txt"><strong>{{ settings()?.site_title }}</strong></span>
         </a>
         <p>{{ tagline() }}</p>

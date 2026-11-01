@@ -100,6 +100,20 @@
   height: 44px;
   width: auto;
 }
+/* An uploaded logo goes inside the same rounded holder, cropped to its upper centre (the emblem). */
+.brand-mark.has-logo {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 2px rgba(132, 204, 22, 0.55), var(--glow);
+}
+.brand-mark.has-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+}
 .brand-txt {
   display: grid;
   line-height: 1.1;

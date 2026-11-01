@@ -5,6 +5,7 @@ import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap, 
 import { CatalogService } from '../core/services/catalog.service';
 import { CartService } from '../core/services/cart.service';
 import { SiteSettingsService } from '../core/services/site-settings.service';
+import { mediaUrl } from '../core/services/media';
 import { UiService } from '../core/services/ui.service';
 import { I18nService } from '../core/i18n/i18n.service';
 import { Category, Goal, Product } from '../shared/models';
@@ -57,7 +58,7 @@ export class StoreLayoutComponent {
     const raw = (this.settings()?.contact_phone ?? '').replace(/[^\d+]/g, '');
     return raw ? `tel:${raw}` : null;
   });
-  protected logo = computed(() => this.settings()?.logo_url ?? null);
+  protected logo = computed(() => mediaUrl(this.settings()?.logo_url));
   protected threshold = computed(() => this.settings()?.free_delivery_threshold ?? null);
 
   constructor() {
