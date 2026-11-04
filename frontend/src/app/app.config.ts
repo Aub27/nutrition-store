@@ -1,10 +1,11 @@
 import { ApplicationConfig, provideAppInitializer, provideBrowserGlobalErrorListeners, inject } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
 
 import { routes } from './app.routes';
 import { apiInterceptor } from './core/interceptors/api.interceptor';
+import { AppTitleStrategy } from './core/services/app-title.strategy';
 import { SiteSettingsService } from './core/services/site-settings.service';
 
 export const appConfig: ApplicationConfig = {
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
     ),
     provideHttpClient(withInterceptors([apiInterceptor])),
+    { provide: TitleStrategy, useClass: AppTitleStrategy },
     // Public settings (title, contact, delivery rules) are fetched once; the UI still renders if the call fails.
     provideAppInitializer(() => {
       const settings = inject(SiteSettingsService);
